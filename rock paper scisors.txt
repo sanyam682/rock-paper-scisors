@@ -1,0 +1,73 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <string>
+
+using namespace std;
+
+// Function to get computer's choice
+string getComputerChoice() {
+    int randomNum = rand() % 3;
+    switch (randomNum) {
+        case 0:
+            return "rock";
+        case 1:
+            return "paper";
+        case 2:
+            return "scissors";
+        default:
+            return ""; // Should not happen
+    }
+}
+
+// Function to determine the winner
+string determineWinner(string userChoice, string computerChoice) {
+    if (userChoice == computerChoice) {
+        return "It's a tie!";
+    } else if ((userChoice == "rock" && computerChoice == "scissors") ||
+               (userChoice == "paper" && computerChoice == "rock") ||
+               (userChoice == "scissors" && computerChoice == "paper")) {
+        return "You win!";
+    } else {
+        return "Computer wins!";
+    }
+}
+
+int main() {
+    srand(time(nullptr));  // Seed the random number generator
+
+    string userChoice;
+    string computerChoice;
+    char playAgain;
+
+    cout << "Welcome to Rock, Paper, Scissors!\n";
+
+    do {
+        // Get user's choice
+        cout << "\nEnter your choice (rock, paper, or scissors): ";
+        cin >> userChoice;
+
+        // Validate user's input
+        while (userChoice != "rock" && userChoice != "paper" && userChoice != "scissors") {
+            cout << "Invalid choice. Please enter rock, paper, or scissors: ";
+            cin >> userChoice;
+        }
+
+        // Get computer's choice
+        computerChoice = getComputerChoice();
+        cout << "Computer chooses: " << computerChoice << endl;
+
+        // Determine the winner
+        string result = determineWinner(userChoice, computerChoice);
+        cout << result << endl;
+
+        // Ask if user wants to play again
+        cout << "\nDo you want to play again? (y/n): ";
+        cin >> playAgain;
+
+    } while (playAgain == 'y' || playAgain == 'Y');
+
+    cout << "\nThanks for playing Rock, Paper, Scissors!\n";
+
+    return 0;
+}
